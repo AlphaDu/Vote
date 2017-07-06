@@ -7,7 +7,7 @@
       <el-input v-model="form.label"></el-input>
     </el-form-item>
     <el-form-item label="活动时间">
-      <el-col :span="11">
+      <el-col :span="10">
         <el-date-picker
           v-model="form.date1"
           type="datetime"
@@ -17,7 +17,7 @@
         </el-date-picker>
       </el-col>
       <el-col class="line" :span="2">-</el-col>
-      <el-col :span="11">
+      <el-col :span="10">
         <el-date-picker
           v-model="form.date2"
           type="datetime"
@@ -29,8 +29,11 @@
     </el-form-item>
   </el-form>
 </template>
+
 <script>
+  import commonStepView from '../abstract/commonStepFormView.vue'
   export default{
+    mixins:[commonStepView],
     data() {
       return {
         form: {
@@ -45,6 +48,31 @@
         }
       }
     },
+    methods:{
+      isFormDataLegal(){
+          if(!this.form.name.trim()){
+              return {
+                  isLegal:false,
+                  msg:'活动名称不能为空'
+              }
+          }
+          if (!this.form.date1.toString().trim() || !this.form.date2.toString().trim()){
+              return {
+                  isLegal:false,
+                  msg:'活动开始时间及结束时间均必填'
+              }
+          }
+          if (new Date(this.form.date1) > new Date(this.form.date2)){
+              return {
+                  isLegal:false,
+                  msg:'结束时间不能在开始时间之前'
+              }
+          }
+          return {
+              isLegal:true
+          }
+      }
+    }
   }
 </script>
 <style>

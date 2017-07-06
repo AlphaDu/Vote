@@ -49,7 +49,9 @@
   </div>
 </template>
 <script>
+  import commonStepView from '../abstract/commonStepFormView.vue'
   export default{
+    mixins:[commonStepView],
     data(){
       const generateData2=_ => {
         const data=[];

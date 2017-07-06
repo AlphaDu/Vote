@@ -24,10 +24,10 @@
       <div class="col-xs-11">
         <div class="pagebox">
           <transition name="fade">
-            <add-base-attr v-if="step === 0"></add-base-attr>
-            <add-score-item v-else-if="step === 1"></add-score-item>
-            <add-member v-else-if="step === 2"></add-member>
-            <add-auth v-else-if="step === 3"></add-auth>
+            <add-base-attr v-if="step === 0" ref="steppage" :initData="loadCurrentForm(0)"></add-base-attr>
+            <add-item v-else-if="step === 1" ref="steppage" :initData="loadCurrentForm(1)"></add-item>
+            <add-member v-else-if="step === 2" ref="steppage" :initData="loadCurrentForm(2)"></add-member>
+            <add-auth v-else-if="step === 3" ref="steppage" :initData="loadCurrentForm(3)"></add-auth>
           </transition>
         </div>
       </div>
@@ -44,28 +44,41 @@
 </template>
 <script>
   import addBaseAttr from './addBaseAttr.vue'
-  import addScoreItem from './addScoreItem.vue'
+  import addItem from './addItem.vue'
   import addMember from './addMember.vue'
   import addAuth from './addAuth.vue'
   
   export default{
     components: {
       addBaseAttr: addBaseAttr,
-      addScoreItem: addScoreItem,
+      addItem: addItem,
       addMember: addMember,
       addAuth: addAuth
     },
+    
     data(){
       return {
         step: 0,
-        
+        forms: {}
       }
     },
     methods: {
       previous(){
+          this.saveCurrentForm();
         this.step--
       },
       next(){
+        if (this.$refs.steppage && this.$refs.steppage.isFormDataLegal){
+          let result=this.$refs.steppage.isFormDataLegal();
+          if (result.isLegal){
+            this.saveCurrentForm();
+            this.step++;
+          } else {
+            this.$message.error(result.msg);
+          }
+          return
+        }
+        this.saveCurrentForm();
         this.step++
       },
       saveToDraft(){
@@ -73,7 +86,19 @@
       },
       publish(){
         
-      }
+      },
+      saveCurrentForm(){
+        const key="form" + this.step;
+        const formData=this.$refs.steppage.form || {};
+        this.forms[key]=formData;
+      },
+      loadCurrentForm(index){
+          if (this.forms.hasOwnProperty("form" + index)){
+            return this.forms['form' + index];
+          }
+        return  {};
+      },
+      
     },
     computed: {
       canGoPrevious(){
