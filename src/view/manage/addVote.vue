@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="add-vote-body">
     <div class="row">
       <div class="col-xs-12 col-sm-7 col-md-6 col-lg-4">
         <div class="stepbox">
@@ -39,6 +39,9 @@
           <el-button type="primary" icon="check">发布投票</el-button>
         </el-button-group>
       </el-button-group>
+    </div>
+    <div>
+      <vue-ueditor></vue-ueditor>
     </div>
   </div>
 </template>
@@ -88,9 +91,11 @@
         
       },
       saveCurrentForm(){
-        const key="form" + this.step;
-        const formData=this.$refs.steppage.form || {};
-        this.forms[key]=formData;
+          if(this.$refs.steppage){
+            const key="form" + this.step;
+            const formData=this.$refs.steppage.form || {};
+            this.forms[key]=formData;
+          }
       },
       loadCurrentForm(index){
           if (this.forms.hasOwnProperty("form" + index)){
@@ -115,7 +120,7 @@
     }
   }
 </script>
-<style>
+<style scoped>
   .pagebox {
     min-height: 200px;
   }
@@ -138,5 +143,8 @@
   .fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */
   {
     opacity: 0
+  }
+  .add-vote-body{
+    margin-top: 30px;
   }
 </style>

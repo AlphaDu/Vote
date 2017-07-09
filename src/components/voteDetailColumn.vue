@@ -34,7 +34,7 @@
     }
   }
 </script>
-<style>
+<style scoped>
   .box{
     text-align: center;
     vertical-align:middle;

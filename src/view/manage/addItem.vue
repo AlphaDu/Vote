@@ -133,6 +133,7 @@
     justify-content: space-between;
     align-items: center;
     transition: all 0.2s;
+    cursor:move;
     .name {
       margin-right: 10px;
       flex: 1

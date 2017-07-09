@@ -104,7 +104,7 @@
   }
 </script>
 
-<style>
+<style scoped>
   .flip-list-move {
     transition: transform 0.5s;
   }

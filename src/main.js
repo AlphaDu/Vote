@@ -8,7 +8,9 @@ import 'element-ui/lib/theme-default/index.css'
 import 'jquery/dist/jquery.min.js'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.min.js'
+import VueEditor from './components/vueUeditor.vue'
 Vue.use(ElementUI);
+Vue.component("VueUeditor",VueEditor);
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

@@ -10,6 +10,7 @@ import AddBaseAttr from '../view/manage/addBaseAttr.vue'
 import AddMember from '../view/manage/addMember.vue'
 import AddScore from '../view/manage/addScore.vue'
 import AddVote from  '../view/manage/addVote.vue'
+import Http404 from '../view/http404.vue'
 Vue.use(Router);
 export default new Router({
   routes: [
@@ -19,40 +20,50 @@ export default new Router({
       component: Hello
     },
     {
-      path:'/login',
-      name:'login',
-      component:CommonLogin
+      path: '/login',
+      name: 'login',
+      component: CommonLogin
     },
     {
-      path:'/votelist',
-      name:'voteList',
-      component:VoteList
-    },{
-      path:'/manage/index',
-      name:'manager',
-      component:ManagerIndex
-    },{
-      path:'/vote/:voteid',
-      name:'voteDetail',
-      component:VoteDetail
+      path: '/votelist',
+      name: 'voteList',
+      component: VoteList
+    }, {
+      path: '/manage/index',
+      name: 'manager',
+      component: ManagerIndex,
+      children: [
+        {
+          path: '/addScore',
+          name: 'addScore',
+          component: AddScore
+        }, {
+          path: '/addVote',
+          name: 'addName',
+          component: AddVote
+        }, {
+          path: '/a',
+          redirect: '/b'
+        }
+      ]
+    }, {
+      path: '/vote/:voteid',
+      name: 'voteDetail',
+      component: VoteDetail
     },
 
     {
-      path:'/test',
-      name:'test',
-      component:voteColumn
+      path: '/test',
+      name: 'test',
+      component: voteColumn
+    }, {
+      path: '/addMember',
+      name: 'member',
+      component: AddMember
     },{
-      path:'/addMember',
-      name:'member',
-      component:AddMember
-    },{
-      path:'/addScore',
-      name:'addScore',
-      component:AddScore
-    },{
-      path:'/addVote',
-      name:'addName',
-      component:AddVote
+      path:'*',
+      name:'HTTP404',
+      component:Http404
     }
   ]
 })
